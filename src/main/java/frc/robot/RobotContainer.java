@@ -27,7 +27,7 @@ import swervelib.SwerveInputStream;
  */
 public class RobotContainer
 {
-
+  
   // Replace with CommandPS4Controller or CommandJoystick if needed
   final         CommandXboxController driverXbox = new CommandXboxController(0);
   // The robot's subsystems and commands are defined here...
@@ -89,6 +89,8 @@ public class RobotContainer
    */
   public RobotContainer()
   {
+
+
     // Configure the trigger bindings
     configureBindings();
     DriverStation.silenceJoystickConnectionWarning(true);
