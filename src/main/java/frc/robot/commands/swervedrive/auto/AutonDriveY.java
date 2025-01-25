@@ -61,12 +61,12 @@ public class AutonDriveY extends Command
   public boolean isFinished() 
   {
     boolean returnValue = false;
-    if ( backingUp && (swerveDriveSystem.getPose().getY() < targetY ))
+    if ( backingUp && (swerveDriveSystem.getPose().getY() < targetY +4))
       returnValue = true;
-    if ( !backingUp && (swerveDriveSystem.getPose().getY() > targetY ))
+    if ( !backingUp && (swerveDriveSystem.getPose().getY() > targetY +4 ))
       returnValue = true;
 
-   // System.out.println(swerveDriveSystem.getPose().getX() + "|" + targetX+ "|" + returnValue);
+    System.out.println(swerveDriveSystem.getPose().getY() + "|" + targetY+ "|" + returnValue);
 
     return returnValue;
   }

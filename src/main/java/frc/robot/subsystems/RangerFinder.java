@@ -22,7 +22,7 @@ public class RangerFinder extends SubsystemBase {
     public RangerFinder()
     {
         super();
-        rangeFinder = new CANrange(Constants.CANrange_PORT);
+        rangeFinder = new CANrange(Constants.CANrange_CAN_ID);
     }
 
     // ----------------------------------------------------------------------------
