@@ -48,4 +48,9 @@ public final class Constants
     public static final double RIGHT_X_DEADBAND = 0.1;
     public static final double TURN_CONSTANT    = 6;
   }
+
+
+  public static double AUTON_MOVE_SPEED = 0.25;
+
+  public static int CANrange_PORT = 10;
 }
