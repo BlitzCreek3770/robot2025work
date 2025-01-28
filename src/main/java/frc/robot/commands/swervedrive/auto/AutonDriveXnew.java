@@ -30,7 +30,7 @@ public class AutonDriveXnew extends Command
     swerveDriveSystem  = swerve;
     targetX = target;
 
-    pidControl = new PIDController(3.0,0,0);
+    pidControl = new PIDController(3,0,0);
 
     addRequirements(swerveDriveSystem);
   }
