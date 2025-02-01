@@ -9,9 +9,8 @@ public class AutoTesting extends SequentialCommandGroup
 
   public AutoTesting(SwerveSubsystem swerve)
   {
-    addCommands(new AutonDriveXnew(swerve,1.5),
-    new AutonDriveXnew(swerve,0.5)
-        //new AutonDriveLateral(swerve, 1, 1.7)      
+    addCommands(//new AutonDriveYnew(swerve,1)
+    new AutonDriveLateral(swerve, 0.4, 0.2)
     ); // End of addCommands
   }
 }

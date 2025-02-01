@@ -15,27 +15,22 @@ import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 
-public class AutonDriveLateral extends Command
+public class AutonDriveYnew extends Command
 {
   private final SwerveSubsystem swerveDriveSystem;
 
-  private double targetX, targetY;
-  PIDController pidControlX, pidControlY;
-  double xVector, yVector;
-
-  double P_VALUE = 3.0;
+  private double targetY;
+  PIDController pidControl;
+  double yVector;
   
   // ----------------------------------------------------------------------------
   // Constructor: Accept drive system and target x-ccord
-  public AutonDriveLateral(SwerveSubsystem swerve, double x, double y)
+  public AutonDriveYnew(SwerveSubsystem swerve, double target)
   {
     swerveDriveSystem  = swerve;
+    targetY = target;
 
-    targetX = x;
-    targetY = y;
-
-    pidControlX = new PIDController(P_VALUE,0,0);
-    pidControlY = new PIDController(P_VALUE, 0, 0);
+    pidControl = new PIDController(3,0,0);
 
     addRequirements(swerveDriveSystem);
   }
@@ -47,10 +42,7 @@ public class AutonDriveLateral extends Command
   public void initialize() 
   { 
 
-    pidControlX.setSetpoint(targetX);
-    pidControlY.setSetpoint(targetY);
-
-    System.out.println("==>"+targetX + "|"+ targetY);
+    pidControl.setSetpoint(targetY);
 
   }
   
@@ -59,14 +51,10 @@ public class AutonDriveLateral extends Command
   @Override
   public void execute()
   {
-    xVector = pidControlX.calculate(swerveDriveSystem.getPose().getX());
-    yVector = pidControlY.calculate(swerveDriveSystem.getPose().getY());
-    swerveDriveSystem.drive(new Translation2d(xVector, yVector), 0.0, true);
+    yVector = pidControl.calculate(swerveDriveSystem.getPose().getY());
+    swerveDriveSystem.drive(new Translation2d(0, yVector), 0.0, true);
 
-    System.out.println(xVector +"|"+ swerveDriveSystem.getPose().getX() + "|"+ targetX);
     System.out.println(yVector +"|"+ swerveDriveSystem.getPose().getY() + "|"+ targetY);
-    System.out.println();
-
   }
 
   // ----------------------------------------------------------------------------
@@ -74,32 +62,12 @@ public class AutonDriveLateral extends Command
   @Override
   public boolean isFinished() 
   {
-
-    System.out.println("IN ISFINISHED");
-
-    if (pidControlX.atSetpoint() && pidControlY.atSetpoint())
-    {
-        System.out.println("ENDING");
-        return true;
+    boolean returnValue = false;
+    if (pidControl.atSetpoint())  {
+      swerveDriveSystem.drive(new Translation2d(0, yVector), 0.0, true);
+      returnValue = true;
     }
-    else
-        return false;
-    /* 
-    boolean returnValueX = false;
-    boolean returnValueY = false;
-    if (pidControlX.atSetpoint())  {
-        swerveDriveSystem.drive(new Translation2d(xVector, yVector), 0.0, true);
-        returnValueX = true;
-    }
-    if (pidControlY.atSetpoint())  {
-        swerveDriveSystem.drive(new Translation2d(xVector, yVector), 0.0, true);
-        returnValueY = true;
-      }
-    if (returnValueX == returnValueY && returnValueX != false)
-        return true;
-    else
-        return false;
-        */
+    return returnValue;
   }
 
   // ----------------------------------------------------------------------------
