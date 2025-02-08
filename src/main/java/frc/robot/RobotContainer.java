@@ -16,10 +16,13 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.DefaultElevator;
 import frc.robot.commands.swervedrive.auto.AutoTesting;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
 import swervelib.SwerveInputStream;
+import frc.robot.subsystems.Elevator;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a "declarative" paradigm, very
@@ -31,6 +34,7 @@ public class RobotContainer
   
   // Replace with CommandPS4Controller or CommandJoystick if needed
   final         CommandXboxController driverXbox = new CommandXboxController(0);
+  final         CommandXboxController manipulatorXbox = new CommandXboxController(1);
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem       drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve"));
@@ -53,6 +57,7 @@ public class RobotContainer
                                                                                              driverXbox::getRightY)
                                                            .headingWhile(true);
 
+  private final Elevator elevator = new Elevator();
    /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -62,7 +67,9 @@ public class RobotContainer
 
     // Configure the trigger bindings
     configureBindings();
-    DriverStation.silenceJoystickConnectionWarning(true);
+    DriverStation.silenceJoystickConnectionWarning(false);
+    elevator.setDefaultCommand(new DefaultElevator(elevator,elevator,() -> manipulatorXbox.getLeftY(),
+                                   () -> manipulatorXbox.getRightY()));
     //NamedCommands.registerCommand("test", Commands.print("I EXIST"));
   }
 

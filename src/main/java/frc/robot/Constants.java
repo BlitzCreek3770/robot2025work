@@ -46,6 +46,19 @@ public final class Constants
   }
   
   public static final int CANrange_CAN_ID = 47;
+  public static final int ELEVATOR_SPARK_FLEX_CAN_ID = 14;
+  public static final int ALGAE_ARM_CAN_ID = 15;
 
 
+  public static final int ELEVATOR_ENCODER_TOLERANCE = 10000;
+  public static final double ELEVATOR_P = .1;
+  public static final double MIN_ELEV_MOTOR_OUTPUT = -1;
+  public static final double MAX_ELEV_MOTOR_OUTPUT = 1;
+  public static final double[] ELEVATOR_POSITIONS = {
+    0,
+    100,
+    200,
+    300,
+    400
+  };
 }
