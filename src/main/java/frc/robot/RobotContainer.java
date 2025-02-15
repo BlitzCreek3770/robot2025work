@@ -10,10 +10,13 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DefaultElevator;
@@ -22,6 +25,7 @@ import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
 import swervelib.SwerveInputStream;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Pusher;
 
 
 /**
@@ -58,6 +62,7 @@ public class RobotContainer
                                                            .headingWhile(true);
 
   private final Elevator elevator = new Elevator();
+  private final Pusher pusher = new Pusher();
    /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -68,7 +73,7 @@ public class RobotContainer
     // Configure the trigger bindings
     configureBindings();
     DriverStation.silenceJoystickConnectionWarning(false);
-    elevator.setDefaultCommand(new DefaultElevator(elevator,elevator,() -> manipulatorXbox.getLeftY(),
+    elevator.setDefaultCommand(new DefaultElevator(elevator,() -> manipulatorXbox.getLeftY(),
                                    () -> manipulatorXbox.getRightY()));
     //NamedCommands.registerCommand("test", Commands.print("I EXIST"));
   }
@@ -85,6 +90,9 @@ public class RobotContainer
     driverXbox.x().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
     driverXbox.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
     driverXbox.back().onTrue((Commands.runOnce(drivebase::zeroGyro)));
+
+    manipulatorXbox.leftBumper().onTrue(new InstantCommand(pusher::extendOut));
+    manipulatorXbox.leftBumper().onFalse(new InstantCommand(pusher::extendIn));
 
   }
   /**

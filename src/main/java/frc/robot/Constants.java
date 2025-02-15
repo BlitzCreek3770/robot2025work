@@ -47,8 +47,20 @@ public final class Constants
   
   public static final int CANrange_CAN_ID = 47;
   public static final int ELEVATOR_SPARK_FLEX_CAN_ID = 14;
-  public static final int ALGAE_ARM_CAN_ID = 15;
+  public static final int SLAPPER_CAN_ID = 15;
+  public static final int INTAKE_ROTATE_CAN_ID = 16;
+  public static final int INTAKE_POWER_CAN_ID = 17;
+  public static final int STOP_SENSOR_DIO_PORT = 0;
+  public static final int ROTATE_SENSOR_TOP_DIO_PORT = 0;
+  public static final int ROTATE_SENSOR_BOTTOM_DIO_PORT = 0;
+  public static final double INTAKE_POWER = .1;
 
+  public static final int PUSHER_OUT_CAN_ID = 26;
+  public static final int PUSHER_POWER_CAN_ID = 27;
+  public static final double PUSHER_MOTOR_SPEED = .1;
+  public static final double PUSHER_EXTEND_POWER = .1;
+  public static final int PUSHER_DOWN_SENSOR_DIO_PORT = 0;
+  public static final int PUSHER_UP_SENSOR_DIO_PORT = 0;
 
   public static final int ELEVATOR_ENCODER_TOLERANCE = 10000;
   public static final double ELEVATOR_P = .1;

@@ -13,17 +13,16 @@ import frc.robot.subsystems.Elevator;
 public class DefaultElevator extends Command
 {
     Timer actionTimer;
-    Elevator elevator, rotate;
+    Elevator elevator;
     DoubleSupplier power, powerRotate;
 
     // ----------------------------------------------------------------------------
-    public DefaultElevator(Elevator e,Elevator r, DoubleSupplier p, DoubleSupplier pR)
+    public DefaultElevator(Elevator e, DoubleSupplier p, DoubleSupplier pR)
     {
         elevator = e;
-        rotate = r;
         power = p;
         powerRotate = pR;
-        addRequirements(elevator,rotate);
+        addRequirements(elevator);
     }
 
     // ----------------------------------------------------------------------------
@@ -35,15 +34,16 @@ public class DefaultElevator extends Command
     // ----------------------------------------------------------------------------
     public void execute()
     {
+
         if (elevator.isInManualControl())  {
             elevator.setElevatorPower(power.getAsDouble());
-            SmartDashboard.putNumber("Elevator Encoder", elevator.getEncoderValue());  
+            SmartDashboard.putNumber("Elevator Encoder", elevator.getElevatorEncoderValue());  
         }
         else  {
             elevator.goToSetPoint();
-            SmartDashboard.putNumber("Elevator Encoder", elevator.getEncoderValue());  
+            SmartDashboard.putNumber("Elevator Encoder", elevator.getElevatorEncoderValue());  
         }
-        rotate.setRotatePower(powerRotate.getAsDouble());
+        elevator.setRotatePower(powerRotate.getAsDouble());
     }
 
     public boolean isFinished()
